@@ -1,0 +1,15 @@
+package pl.wsb.issuetracker.issue.dto;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class PublishIssueCommentRequestDTO {
+
+    private String comment;
+
+}

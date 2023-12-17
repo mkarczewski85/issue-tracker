@@ -1,0 +1,9 @@
+rootProject.name = 'issue-tracker'
+
+include('runner')
+include('jpa')
+include('user')
+include('api')
+include('issue')
+include('authentication')
+include('administration')

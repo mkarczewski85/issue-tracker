@@ -1,0 +1,14 @@
+plugins {
+    id 'java-library'
+    id 'pl.wsb.issuetracker.common-conventions'
+}
+
+dependencies {
+
+    implementation project(':authentication')
+    implementation project(':issue')
+
+    implementation libs.spring.boot.web
+
+    testImplementation libs.spring.boot.test
+}
