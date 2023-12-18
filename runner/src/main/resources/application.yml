@@ -23,12 +23,3 @@ spring:
   liquibase:
     contexts: main
     change-log: classpath:db/changelog/liquibase-changelog.xml
-
-logging:
-  level:
-    org:
-      springframework:
-        web:
-          servlet:
-            handler:
-              HandlerMappingIntrospector: ERROR
