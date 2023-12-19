@@ -1,6 +1,7 @@
 package pl.wsb.issuetracker.user.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wsb.issuetracker.jpa.entity.User;
@@ -25,6 +26,11 @@ public class UserService implements UserClient {
     private final UserCreateComponent userCreateComponent;
     private final UserCredentialsCreateComponent credentialsCreateComponent;
     private final UserPatchComponent patchComponent;
+
+    @Override
+    public Page<User> getUsers(final UserFiltersDTO filters, final int offset, final int limit) {
+        return queryComponent.getUsers(filters, offset, limit);
+    }
 
     @Override
     @Transactional(readOnly = true)

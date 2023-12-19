@@ -1,11 +1,15 @@
 package pl.wsb.issuetracker.api.controllers;
 
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.wsb.issuetracker.administration.AdministrationClient;
 import pl.wsb.issuetracker.administration.dto.UserAccountDTO;
+import pl.wsb.issuetracker.administration.dto.UserAccountDisplayDTO;
+import pl.wsb.issuetracker.common.pagination.PageWrapperDTO;
 import pl.wsb.issuetracker.user.dto.CreateUserRequestDTO;
 import pl.wsb.issuetracker.user.dto.PatchUserRequestDTO;
+import pl.wsb.issuetracker.user.dto.UserFiltersDTO;
 
 import java.util.UUID;
 
@@ -16,6 +20,18 @@ public class AdministrationController {
     static final String REST_API_BASE_PATH = "${rest.prefix}" + "/users";
 
     private final AdministrationClient administrationClient;
+
+    @GetMapping
+    public PageWrapperDTO<UserAccountDisplayDTO> getPagedUserAccounts(@RequestParam(defaultValue = "0") @Min(0) final int offset,
+                                                                      @RequestParam(defaultValue = "20") @Min(20) final int limit,
+                                                                      @RequestBody(required = false) final UserFiltersDTO filters) {
+        return administrationClient.getUserAccounts(filters, offset, limit);
+    }
+
+    @GetMapping("/{uuid}")
+    public UserAccountDTO getUserAccount(@PathVariable("uuid") final String uuid) {
+        return administrationClient.getUserAccount(UUID.fromString(uuid));
+    }
 
     @PostMapping
     public UserAccountDTO createUserAccount(@RequestBody final CreateUserRequestDTO reqDTO) {

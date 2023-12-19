@@ -1,5 +1,6 @@
 package pl.wsb.issuetracker.user;
 
+import org.springframework.data.domain.Page;
 import pl.wsb.issuetracker.jpa.entity.User;
 import pl.wsb.issuetracker.jpa.entity.UserCredentials;
 import pl.wsb.issuetracker.jpa.entity.UserRole;
@@ -12,6 +13,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserClient {
+
+    Page<User> getUsers(UserFiltersDTO filters, int offset, int limit);
 
     Optional<User> findByEmail(String email);
 

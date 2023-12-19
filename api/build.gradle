@@ -8,8 +8,10 @@ dependencies {
     implementation project(':authentication')
     implementation project(':issue')
     implementation project(':administration')
+    implementation project(':common')
 
     implementation libs.spring.boot.web
+    implementation libs.spring.boot.validation
 
     testImplementation libs.spring.boot.test
 }
