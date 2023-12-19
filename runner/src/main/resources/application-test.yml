@@ -17,9 +17,9 @@ spring:
       enabled: true
   ### Email sender config (test)
   mail:
-    host: apoorganizer.nazwa.pl
-    username: ksef-web-test@tech.apollogic.com
-    password: fuzzyGho$t91
+    host: smtp.gmail.com
+    username: wsb.issue.tracker@gmail.com
+    password: <password>
     port: 587
     protocol: smtp
 
