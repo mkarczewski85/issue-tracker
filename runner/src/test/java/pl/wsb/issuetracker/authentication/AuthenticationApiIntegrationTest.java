@@ -17,9 +17,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-//@TestPropertySource("classpath:application-test.yml")
 @ActiveProfiles({"test"})
-public class AuthenticationIntegrationTest {
+public class AuthenticationApiIntegrationTest {
 
     private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
     private static final String CREDENTIALS_JSON = "{\"login\":\"jan.nowak@company.com\",\"password\":\"password\"}";

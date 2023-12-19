@@ -49,7 +49,7 @@ public class PatchIssueComponent {
         if (issue.getStatus().canSwitchTo(newStatus)) {
             issue.setStatus(newStatus);
         } else {
-            throw new IllegalStateException();
+            throw new IllegalStateException(); // TODO: custom exception
         }
     }
 

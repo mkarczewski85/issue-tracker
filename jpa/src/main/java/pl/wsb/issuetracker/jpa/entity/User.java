@@ -40,7 +40,7 @@ public class User {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
     private UserCredentials userCredentials;
 
     @Column(name = "role", nullable = false)

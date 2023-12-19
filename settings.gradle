@@ -2,8 +2,8 @@ rootProject.name = 'issue-tracker'
 
 include('runner')
 include('jpa')
+include('authentication')
 include('user')
 include('api')
 include('issue')
-include('authentication')
 include('administration')

@@ -10,6 +10,13 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: false
+  ### Email sender config (test)
+  mail:
+    host: <email_server>
+    username: <email_account_username>
+    password: <email_account_password>
+    port: 587
+    protocol: smtp
 
 ### SSL config
 server:
