@@ -21,6 +21,7 @@ public class UserSpecificationComponent {
     private static final String EMAIL_FIELD_NAME = "email";
     public static final String UUID_FIELD_NAME = "uuid";
     public static final String ROLE_FIELD_NAME = "role";
+    public static final String IS_ACTIVE_FIELD_NAME = "isActive";
 
     public Specification<User> getUserSpecification(UserFiltersDTO filters) {
         return ((root, query, criteriaBuilder) -> {
@@ -39,6 +40,7 @@ public class UserSpecificationComponent {
         addEmailPhrasePredicateIfProvided(filters, criteriaBuilder, root, predicates);
         addUuidPredicateIfProvided(filters, criteriaBuilder, root, predicates);
         addRolePredicateIfProvided(filters, criteriaBuilder, root, predicates);
+        addIsActivePredicateIfProvided(filters, criteriaBuilder, root, predicates);
     }
 
     private static void addNamePhrasePredicateIfProvided(final UserFiltersDTO filters,
@@ -77,6 +79,15 @@ public class UserSpecificationComponent {
                                                    final Collection<Predicate> predicates) {
         if (filters.getUserRole() == null) return;
         final Predicate userRoleEqualPredicate = criteriaBuilder.equal(root.get(ROLE_FIELD_NAME), UserRole.valueOf(filters.getUserRole()));
+        predicates.add(userRoleEqualPredicate);
+    }
+
+    private static void addIsActivePredicateIfProvided(final UserFiltersDTO filters,
+                                                       final CriteriaBuilder criteriaBuilder,
+                                                       final Root<User> root,
+                                                       final Collection<Predicate> predicates) {
+        if (filters.getIsActive() == null) return;
+        final Predicate userRoleEqualPredicate = criteriaBuilder.equal(root.get(IS_ACTIVE_FIELD_NAME), filters.getIsActive());
         predicates.add(userRoleEqualPredicate);
     }
 

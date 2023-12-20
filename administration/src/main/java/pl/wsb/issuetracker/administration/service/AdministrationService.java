@@ -2,20 +2,24 @@ package pl.wsb.issuetracker.administration.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wsb.issuetracker.administration.AdministrationClient;
 import pl.wsb.issuetracker.administration.common.MappingHelper;
 import pl.wsb.issuetracker.administration.component.AccountOwnerNotificationComponent;
+import pl.wsb.issuetracker.administration.dto.DepartmentDTO;
 import pl.wsb.issuetracker.administration.dto.UserAccountDTO;
 import pl.wsb.issuetracker.administration.dto.UserAccountDisplayDTO;
 import pl.wsb.issuetracker.common.pagination.PageWrapperDTO;
 import pl.wsb.issuetracker.jpa.entity.User;
+import pl.wsb.issuetracker.jpa.repository.DepartmentRepository;
 import pl.wsb.issuetracker.user.UserClient;
 import pl.wsb.issuetracker.user.dto.CreateUserRequestDTO;
 import pl.wsb.issuetracker.user.dto.PatchUserRequestDTO;
 import pl.wsb.issuetracker.user.dto.UserFiltersDTO;
 
+import java.util.Collection;
 import java.util.UUID;
 
 @Service
@@ -24,6 +28,7 @@ public class AdministrationService implements AdministrationClient {
 
     private final UserClient userClient;
     private final AccountOwnerNotificationComponent notificationComponent;
+    private final DepartmentRepository departmentRepository;
 
     @Override
     @Transactional
@@ -61,6 +66,14 @@ public class AdministrationService implements AdministrationClient {
     @Transactional(readOnly = true)
     public UserAccountDTO getUserAccount(final UUID uuid) {
         return MappingHelper.toUserAccountDTO(userClient.getByUUID(uuid));
+    }
+
+    @Override
+    public Collection<DepartmentDTO> getAllDepartments() {
+        return departmentRepository.findAll(Sort.by(Sort.Direction.ASC, "name"))
+                .stream()
+                .map(MappingHelper::toDepartmentDTO)
+                .toList();
     }
 
 }
