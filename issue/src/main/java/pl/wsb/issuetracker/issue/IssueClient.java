@@ -1,5 +1,6 @@
 package pl.wsb.issuetracker.issue;
 
+import pl.wsb.issuetracker.common.pagination.PageWrapperDTO;
 import pl.wsb.issuetracker.issue.dto.*;
 
 import java.util.Collection;
@@ -13,7 +14,7 @@ public interface IssueClient {
 
     IssueDetailsDTO patchIssue(UUID uuid, PatchIssueRequestDTO reqDTO);
 
-    Collection<IssueDisplayDTO> getUserIssues(IssueFiltersDTO filters);
+    PageWrapperDTO<IssueDisplayDTO> getUserIssues(IssueFiltersDTO filters, int offset, int limit);
 
     IssueCommentDTO publishIssueComment(UUID uuid, PublishIssueCommentRequestDTO reqDTO);
 

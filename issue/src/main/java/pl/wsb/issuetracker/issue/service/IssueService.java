@@ -1,8 +1,10 @@
 package pl.wsb.issuetracker.issue.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.wsb.issuetracker.common.pagination.PageWrapperDTO;
 import pl.wsb.issuetracker.issue.IssueClient;
 import pl.wsb.issuetracker.issue.common.MappingHelper;
 import pl.wsb.issuetracker.issue.component.*;
@@ -42,10 +44,12 @@ public class IssueService implements IssueClient {
 
     @Override
     @Transactional(readOnly = true)
-    public Collection<IssueDisplayDTO> getUserIssues(final IssueFiltersDTO filter) {
-        return queryIssueComponent.getUserIssues(filter).stream()
-                .map(MappingHelper::toIssueDisplayDTO)
-                .toList();
+    public PageWrapperDTO<IssueDisplayDTO> getUserIssues(final IssueFiltersDTO filter,
+                                                         final int offset,
+                                                         final int limit) {
+        final Page<IssueDisplayDTO> page = queryIssueComponent.getUserIssues(filter, offset, limit)
+                .map(MappingHelper::toIssueDisplayDTO);
+        return PageWrapperDTO.from(page);
     }
 
     @Override

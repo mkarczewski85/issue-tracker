@@ -8,6 +8,7 @@ dependencies {
     implementation project(":jpa")
     implementation project(":authentication")
     implementation project(":user")
+    implementation project(":common")
 
     implementation libs.spring.boot.starter
     implementation libs.spring.boot.validation

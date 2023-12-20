@@ -1,6 +1,9 @@
 package pl.wsb.issuetracker.issue.component;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import pl.wsb.issuetracker.issue.dto.IssueFiltersDTO;
@@ -9,7 +12,6 @@ import pl.wsb.issuetracker.jpa.entity.Issue;
 import pl.wsb.issuetracker.jpa.entity.User;
 import pl.wsb.issuetracker.jpa.repository.IssueRepository;
 
-import java.util.Collection;
 import java.util.UUID;
 
 @Component
@@ -28,12 +30,14 @@ public class QueryIssueComponent {
                 .orElseThrow();
     }
 
-    public Collection<Issue> getUserIssues(final IssueFiltersDTO filters) {
+    public Page<Issue> getUserIssues(final IssueFiltersDTO filters,
+                                     final int offset,
+                                     final int limit) {
         final User user = loggedUserComponent.getLoggedUser();
         final Specification<Issue> issueSpecification = specification.getIssueSpecification(user, filters);
-        return issueRepository.findAll(issueSpecification)
-                .stream()
-                .toList();
+        int pageNo = (limit + offset) / limit;
+        final PageRequest pageRequest = PageRequest.of(--pageNo, limit, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return issueRepository.findAll(issueSpecification, pageRequest);
     }
 
 }
