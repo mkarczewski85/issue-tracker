@@ -1,8 +1,11 @@
 package pl.wsb.issuetracker.api.controllers;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.wsb.issuetracker.administration.AdministrationClient;
 import pl.wsb.issuetracker.administration.dto.UserAccountDTO;
@@ -18,6 +21,7 @@ import java.util.UUID;
 @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
 @RequestMapping(AdministrationController.REST_API_BASE_PATH)
 @RequiredArgsConstructor
+@Validated
 public class AdministrationController {
     static final String REST_API_BASE_PATH = "${rest.prefix}" + "/users";
 
@@ -36,7 +40,7 @@ public class AdministrationController {
     }
 
     @PostMapping
-    public UserAccountDTO createUserAccount(@RequestBody final CreateUserRequestDTO reqDTO) {
+    public UserAccountDTO createUserAccount(@RequestBody @Valid @NotNull final CreateUserRequestDTO reqDTO) {
         return administrationClient.createAndNotifyUserAccount(reqDTO);
     }
 

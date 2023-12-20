@@ -8,6 +8,7 @@ dependencies {
     implementation project(':user')
 
     implementation libs.spring.boot.security
+    implementation libs.spring.boot.validation
 
     implementation libs.jwt.api
     runtimeOnly libs.jwt.impl

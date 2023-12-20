@@ -1,7 +1,10 @@
 package pl.wsb.issuetracker.api.controllers;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.wsb.issuetracker.issue.IssueClient;
 import pl.wsb.issuetracker.issue.dto.*;
@@ -10,6 +13,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 @RestController
+@Validated
 @RequestMapping(IssuesController.REST_API_BASE_PATH)
 @RequiredArgsConstructor
 public class IssuesController {
@@ -19,13 +23,13 @@ public class IssuesController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_REPORTER')")
-    public IssueDetailsDTO reportIssue(@RequestBody final ReportIssueRequestDTO reqDTO) {
+    public IssueDetailsDTO reportIssue(@RequestBody @Valid @NotNull final ReportIssueRequestDTO reqDTO) {
         return issueClient.reportIssue(reqDTO);
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_REPORTER') or hasRole('ROLE_TECHNICIAN')")
-    public Collection<IssueDisplayDTO> getUserIssues(@RequestBody final IssueFiltersDTO filters) {
+    public Collection<IssueDisplayDTO> getUserIssues(@RequestBody(required = false) final IssueFiltersDTO filters) {
         return issueClient.getUserIssues(filters);
     }
 
@@ -38,7 +42,7 @@ public class IssuesController {
     @PatchMapping("/{uuid}")
     @PreAuthorize("hasRole('ROLE_TECHNICIAN')")
     public IssueDetailsDTO patchIssue(@PathVariable("uuid") final String uuid,
-                                      @RequestBody PatchIssueRequestDTO reqDTO) {
+                                      @RequestBody @NotNull PatchIssueRequestDTO reqDTO) {
         return issueClient.patchIssue(UUID.fromString(uuid), reqDTO);
     }
 

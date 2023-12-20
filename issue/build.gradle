@@ -10,6 +10,7 @@ dependencies {
     implementation project(":user")
 
     implementation libs.spring.boot.starter
+    implementation libs.spring.boot.validation
 
     testImplementation libs.spring.boot.test
 }

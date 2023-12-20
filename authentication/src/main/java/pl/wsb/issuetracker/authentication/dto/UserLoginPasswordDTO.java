@@ -1,5 +1,6 @@
 package pl.wsb.issuetracker.authentication.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserLoginPasswordDTO {
 
+    @NotBlank
     private String login;
+    @NotBlank
     private String password;
 
 }

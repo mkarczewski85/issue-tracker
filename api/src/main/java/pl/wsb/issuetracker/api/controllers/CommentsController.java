@@ -1,7 +1,10 @@
 package pl.wsb.issuetracker.api.controllers;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.wsb.issuetracker.issue.IssueClient;
 import pl.wsb.issuetracker.issue.dto.IssueCommentDTO;
@@ -11,6 +14,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 @RestController
+@Validated
 @PreAuthorize("hasRole('ROLE_REPORTER') or hasRole('ROLE_TECHNICIAN')")
 @RequestMapping(CommentsController.REST_API_BASE_PATH)
 @RequiredArgsConstructor
@@ -22,7 +26,7 @@ public class CommentsController {
 
     @PostMapping("/{uuid}/comments")
     public IssueCommentDTO publishIssueComment(@PathVariable("uuid") final String uuid,
-                                               @RequestBody final PublishIssueCommentRequestDTO reqDTO) {
+                                               @RequestBody @Valid @NotNull final PublishIssueCommentRequestDTO reqDTO) {
         return issueClient.publishIssueComment(UUID.fromString(uuid), reqDTO);
     }
 
