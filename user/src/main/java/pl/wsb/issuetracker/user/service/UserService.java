@@ -13,7 +13,6 @@ import pl.wsb.issuetracker.user.dto.CreateUserRequestDTO;
 import pl.wsb.issuetracker.user.dto.PatchUserRequestDTO;
 import pl.wsb.issuetracker.user.dto.UserFiltersDTO;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,6 +27,7 @@ public class UserService implements UserClient {
     private final UserPatchComponent patchComponent;
 
     @Override
+    @Transactional(readOnly = true)
     public Page<User> getUsers(final UserFiltersDTO filters, final int offset, final int limit) {
         return queryComponent.getUsers(filters, offset, limit);
     }
@@ -39,25 +39,23 @@ public class UserService implements UserClient {
     }
 
     @Override
+    @Transactional
     public User createUser(final CreateUserRequestDTO reqDTO) {
         return userCreateComponent.createUser(reqDTO);
     }
 
     @Override
+    @Transactional
     public User patchUser(final UUID uuid, final PatchUserRequestDTO reqDTO) {
         return patchComponent.patchUser(uuid, reqDTO);
     }
 
     @Override
+    @Transactional
     public User resetUserCredentials(final UUID uuid) {
         final User user = queryComponent.getByUUID(uuid);
         credentialsCreateComponent.recreateUserCredentials(user);
         return user;
-    }
-
-    @Override
-    public Collection<User> getUsers(UserFiltersDTO filters) {
-        return null;
     }
 
     @Override

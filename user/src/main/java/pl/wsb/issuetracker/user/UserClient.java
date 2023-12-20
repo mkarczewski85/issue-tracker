@@ -8,7 +8,6 @@ import pl.wsb.issuetracker.user.dto.CreateUserRequestDTO;
 import pl.wsb.issuetracker.user.dto.PatchUserRequestDTO;
 import pl.wsb.issuetracker.user.dto.UserFiltersDTO;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,8 +22,6 @@ public interface UserClient {
     User patchUser(UUID uuid, PatchUserRequestDTO reqDTO);
 
     User resetUserCredentials(UUID uuid);
-
-    Collection<User> getUsers(UserFiltersDTO filters);
 
     User getByUUID(UUID uuid);
 

@@ -1,6 +1,7 @@
 package pl.wsb.issuetracker.api.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.wsb.issuetracker.issue.IssueClient;
 import pl.wsb.issuetracker.issue.dto.IssueCommentDTO;
@@ -10,6 +11,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 @RestController
+@PreAuthorize("hasRole('ROLE_REPORTER') or hasRole('ROLE_TECHNICIAN')")
 @RequestMapping(CommentsController.REST_API_BASE_PATH)
 @RequiredArgsConstructor
 public class CommentsController {

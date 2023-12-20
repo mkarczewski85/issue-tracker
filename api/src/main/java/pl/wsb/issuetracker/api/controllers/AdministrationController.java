@@ -2,6 +2,7 @@ package pl.wsb.issuetracker.api.controllers;
 
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.wsb.issuetracker.administration.AdministrationClient;
 import pl.wsb.issuetracker.administration.dto.UserAccountDTO;
@@ -14,6 +15,7 @@ import pl.wsb.issuetracker.user.dto.UserFiltersDTO;
 import java.util.UUID;
 
 @RestController
+@PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
 @RequestMapping(AdministrationController.REST_API_BASE_PATH)
 @RequiredArgsConstructor
 public class AdministrationController {
