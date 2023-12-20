@@ -19,6 +19,9 @@ dependencies {
     runtimeOnly libs.h2.db
 
     testImplementation libs.spring.boot.test
+//    testImplementation libs.bundles.junit
+    testImplementation libs.junit.api
+    testImplementation libs.junit.engine
 
 }
 

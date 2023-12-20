@@ -7,7 +7,8 @@ jwt = "0.12.3"
 dependency-management = "1.1.4"
 postgresql = "42.7.1"
 assertj-core = "3.11.1"
-spring-docs="2.3.0"
+spring-docs = "2.3.0"
+junit-version = "5.10.1"
 
 [libraries]
 # spring
@@ -20,6 +21,9 @@ spring-boot-mail = { module = "org.springframework.boot:spring-boot-starter-mail
 spring-boot-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring-boot" }
 spring-rest-docs = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "spring-docs" }
 
+junit-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-version" }
+junit-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-version" }
+
 # other
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 liquibase-core = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
@@ -28,6 +32,9 @@ postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" 
 jwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jwt" }
 jwt-impl = { module = "io.jsonwebtoken:jjwt-impl ", version.ref = "jwt" }
 jwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jwt" }
+
+[bundles]
+junit = ["junit-api", "junit-engine"]
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }

@@ -27,7 +27,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="updated_at" type="datetime">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="reporter_id" type="bigint">
                 <constraints nullable="false"/>

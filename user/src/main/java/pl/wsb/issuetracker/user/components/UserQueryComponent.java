@@ -37,7 +37,7 @@ public class UserQueryComponent {
     }
 
     public User getRandomWith(final UserRole userRole) {
-        return userRepository.getRandomWithRole(userRole);
+        return userRepository.getRandomWithRole(userRole.name());
     }
 
 }
