@@ -9,7 +9,7 @@ VALUES ('Dział księgowości', 'Budynek A, parter');
 -- mock users for test profile (default password: 'password')
 -- user with ADMIN role
 INSERT INTO user_profiles (uuid, first_name, last_name, email, is_active, role, department_id)
-VALUES ('1116041a-40b7-4419-848a-78e8c9d5b09f', 'Jan', 'Kowalski', 'admin@company.com', true, 'ADMIN', 1);
+VALUES ('1116041a-40b7-4419-848a-78e8c9d5b09f', 'Jan', 'Kowalski', 'admin@company.com', true, 'ADMINISTRATOR', 1);
 
 INSERT INTO user_credentials (user_id, password_hash, salt)
 VALUES (1, 'FdWbzJDMjC6kM1bY8w4KFxw6m410BBUcmgOQCw1JERk=', 'e9Cu8+ZDmqzJjN/C4xYNp8VpT4rs5pk9fv7octafP+U=');
