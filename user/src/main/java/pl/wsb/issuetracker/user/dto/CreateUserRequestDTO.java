@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.wsb.issuetracker.common.validators.ValueOfEnum;
+import pl.wsb.issuetracker.jpa.entity.UserRole;
 
 @Data
 @Builder
@@ -22,6 +24,7 @@ public class CreateUserRequestDTO {
     @Email
     private String email;
     @NotBlank
+    @ValueOfEnum(enumClass = UserRole.class)
     private String role;
 
 }

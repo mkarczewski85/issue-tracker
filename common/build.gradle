@@ -5,4 +5,5 @@ plugins {
 
 dependencies {
     implementation libs.spring.boot.data
+    implementation libs.spring.boot.validation
 }

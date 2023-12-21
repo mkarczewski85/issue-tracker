@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.wsb.issuetracker.common.validators.ValueOfEnum;
+import pl.wsb.issuetracker.jpa.entity.IssueSeverity;
 
 @Data
 @Builder
@@ -20,6 +22,7 @@ public class ReportIssueRequestDTO {
     @Size(max = 2500)
     private String description;
     @NotBlank
+    @ValueOfEnum(enumClass = IssueSeverity.class)
     private String severity;
 
 }
