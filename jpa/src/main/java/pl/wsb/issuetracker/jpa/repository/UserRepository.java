@@ -22,7 +22,7 @@ public interface UserRepository extends CrudRepository<User, Long>,
 
     User getByUuid(final UUID uuid);
 
-    @Query(value = "SELECT * FROM user_profiles WHERE role = :role ORDER BY RAND() LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM user_profiles WHERE role = :role AND is_active = true ORDER BY RAND() LIMIT 1", nativeQuery = true)
     User getRandomWithRole(@Param("role") String role);
 
     boolean existsByEmail(final String email);
