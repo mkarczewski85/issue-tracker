@@ -27,6 +27,8 @@ public interface UserClient {
 
     User getRandomWith(UserRole role);
 
+    void deleteUser(UUID uuid);
+
     boolean isPasswordValid(UserCredentials userCredentials, String password);
 
 }

@@ -25,6 +25,7 @@ public class UserService implements UserClient {
     private final UserCreateComponent userCreateComponent;
     private final UserCredentialsCreateComponent credentialsCreateComponent;
     private final UserPatchComponent patchComponent;
+    private final UserDeleteComponent deleteComponent;
 
     @Override
     @Transactional(readOnly = true)
@@ -68,6 +69,12 @@ public class UserService implements UserClient {
     @Transactional(readOnly = true)
     public User getRandomWith(final UserRole role) {
         return queryComponent.getRandomWith(role);
+    }
+
+    @Override
+    @Transactional
+    public void deleteUser(final UUID uuid) {
+        deleteComponent.deleteUser(uuid);
     }
 
     @Override

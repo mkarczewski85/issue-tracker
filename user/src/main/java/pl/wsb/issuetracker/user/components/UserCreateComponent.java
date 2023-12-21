@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.wsb.issuetracker.jpa.entity.Department;
 import pl.wsb.issuetracker.jpa.entity.User;
+import pl.wsb.issuetracker.jpa.entity.UserCredentials;
 import pl.wsb.issuetracker.jpa.entity.UserRole;
 import pl.wsb.issuetracker.jpa.repository.DepartmentRepository;
 import pl.wsb.issuetracker.jpa.repository.UserRepository;
@@ -23,7 +24,8 @@ public class UserCreateComponent {
         }
         final Department department = findDepartment(reqDTO.getDepartmentId());
         final User user = createUser(reqDTO, department);
-        credentialsCreateComponent.createUserCredentials(user);
+        final UserCredentials userCredentials = credentialsCreateComponent.createUserCredentials(user);
+        user.setUserCredentials(userCredentials);
         return userRepository.save(user);
     }
 

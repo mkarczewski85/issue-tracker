@@ -69,6 +69,7 @@ public class AdministrationService implements AdministrationClient {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<DepartmentDTO> getAllDepartments() {
         return departmentRepository.findAll(Sort.by(Sort.Direction.ASC, "name"))
                 .stream()

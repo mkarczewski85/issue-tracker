@@ -1,11 +1,14 @@
 package pl.wsb.issuetracker.user.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateUserRequestDTO {
@@ -16,6 +19,7 @@ public class CreateUserRequestDTO {
     private String lastName;
     private long departmentId;
     @NotBlank
+    @Email
     private String email;
     @NotBlank
     private String role;

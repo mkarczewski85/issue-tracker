@@ -11,7 +11,7 @@ import pl.wsb.issuetracker.jpa.entity.UserCredentials;
 public class AccountOwnerNotificationComponent {
 
     private final EmailMessageCreateComponent messageCreateComponent;
-    private final EmailMessageSendingComponent sendingComponent;
+    private final EmailMessageSender sendingComponent;
 
     public void notifyAccountCreated(final User user) {
         final UserCredentials credentials = user.getUserCredentials();
