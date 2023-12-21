@@ -20,4 +20,6 @@ public interface IssueClient {
 
     Collection<IssueCommentDTO> getIssueComments(UUID uuid);
 
+    void deleteByUuid(UUID uuid);
+
 }

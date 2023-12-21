@@ -22,6 +22,7 @@ public class IssueService implements IssueClient {
     private final PatchIssueComponent patchIssueComponent;
     private final PublishIssueCommentComponent publishIssueCommentComponent;
     private final QueryIssueCommentComponent queryIssueCommentComponent;
+    private final DeleteIssueComponent deleteIssueComponent;
 
     @Override
     @Transactional
@@ -65,6 +66,12 @@ public class IssueService implements IssueClient {
         return queryIssueCommentComponent.getIssueComments(uuid).stream()
                 .map(MappingHelper::toIssueCommentDTO)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public void deleteByUuid(final UUID uuid) {
+        deleteIssueComponent.deleteIssue(uuid);
     }
 
 }

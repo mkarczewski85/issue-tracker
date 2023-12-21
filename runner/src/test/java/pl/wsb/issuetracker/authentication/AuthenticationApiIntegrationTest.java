@@ -46,6 +46,7 @@ public class AuthenticationApiIntegrationTest {
                         .header(AUTHORIZATION_HEADER_NAME, jwt))
                 .andExpect(status().isOk())
                 .andReturn();
+
     }
 
     @Test
