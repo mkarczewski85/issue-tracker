@@ -2,6 +2,7 @@ package pl.wsb.issuetracker.issue.component;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import pl.wsb.issuetracker.common.exceptions.IllegalOperationException;
 import pl.wsb.issuetracker.issue.dto.PatchIssueRequestDTO;
 import pl.wsb.issuetracker.jpa.entity.Issue;
 import pl.wsb.issuetracker.jpa.entity.IssueSeverity;
@@ -49,7 +50,7 @@ public class PatchIssueComponent {
         if (issue.getStatus().canSwitchTo(newStatus)) {
             issue.setStatus(newStatus);
         } else {
-            throw new IllegalStateException(); // TODO: custom exception
+            throw new IllegalOperationException("Cannot switch status to:" + newStatus);
         }
     }
 

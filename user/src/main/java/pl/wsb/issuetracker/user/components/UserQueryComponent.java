@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+import pl.wsb.issuetracker.common.exceptions.NotFoundException;
 import pl.wsb.issuetracker.jpa.entity.User;
 import pl.wsb.issuetracker.jpa.entity.UserRole;
 import pl.wsb.issuetracker.jpa.repository.UserRepository;
@@ -33,7 +34,7 @@ public class UserQueryComponent {
     }
 
     public User getByUUID(final UUID uuid) {
-        return userRepository.findByUuid(uuid).orElseThrow();
+        return userRepository.findByUuid(uuid).orElseThrow(() -> new NotFoundException("Unable to find user"));
     }
 
     public User getRandomWith(final UserRole userRole) {

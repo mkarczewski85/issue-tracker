@@ -2,6 +2,8 @@ package pl.wsb.issuetracker.user.components;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import pl.wsb.issuetracker.common.exceptions.AlreadyExistsException;
+import pl.wsb.issuetracker.common.exceptions.NotFoundException;
 import pl.wsb.issuetracker.jpa.entity.Department;
 import pl.wsb.issuetracker.jpa.entity.User;
 import pl.wsb.issuetracker.jpa.entity.UserCredentials;
@@ -20,7 +22,7 @@ public class UserCreateComponent {
 
     public User createUser(final CreateUserRequestDTO reqDTO) {
         if (userRepository.existsByEmail(reqDTO.getEmail())) {
-            throw new RuntimeException(); // TODO: custom exception
+            throw new AlreadyExistsException("User with given email address already exists");
         }
         final Department department = findDepartment(reqDTO.getDepartmentId());
         final User user = createUser(reqDTO, department);
@@ -41,7 +43,7 @@ public class UserCreateComponent {
     }
 
     private Department findDepartment(final long id) {
-        return departmentRepository.findById(id).orElseThrow();
+        return departmentRepository.findById(id).orElseThrow(() -> new NotFoundException("Unable to find department"));
     }
 
 }
