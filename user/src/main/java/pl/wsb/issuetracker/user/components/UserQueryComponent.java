@@ -29,7 +29,7 @@ public class UserQueryComponent {
     }
 
     public Optional<User> findByEmail(final String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmailAndIsActive(email, true);
     }
 
     public User getByUUID(final UUID uuid) {

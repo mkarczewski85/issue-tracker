@@ -16,7 +16,7 @@ import java.util.UUID;
 public interface UserRepository extends CrudRepository<User, Long>,
         PagingAndSortingRepository<User, Long>, JpaSpecificationExecutor<User> {
 
-    Optional<User> findByEmail(final String email);
+    Optional<User> findByEmailAndIsActive(final String email, boolean active);
 
     Optional<User> findByUuid(final UUID uuid);
 

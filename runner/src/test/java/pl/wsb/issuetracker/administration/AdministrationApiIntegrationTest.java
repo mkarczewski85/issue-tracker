@@ -41,6 +41,10 @@ public class AdministrationApiIntegrationTest {
             .firstName("Szymon")
             .build();
 
+    public static final PatchUserRequestDTO DEACTIVATE_PATCH_USER_REQ_DTO = PatchUserRequestDTO.builder()
+            .isActive(false)
+            .build();
+
     @Autowired
     private AdministrationController tested;
     @Autowired
@@ -99,6 +103,7 @@ public class AdministrationApiIntegrationTest {
         this.userUuid = UUID.fromString(actual.getUuid());
     }
 
+    @Test
     public void shouldDeactivateUserAccount() {
 
     }
