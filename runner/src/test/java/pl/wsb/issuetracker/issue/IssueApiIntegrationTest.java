@@ -10,7 +10,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pl.wsb.issuetracker.api.controllers.IssuesController;
 import pl.wsb.issuetracker.common.pagination.PageWrapperDTO;
 import pl.wsb.issuetracker.helper.SecurityContextHelper;
-import pl.wsb.issuetracker.helper.TestAuthenticationData;
 import pl.wsb.issuetracker.issue.dto.IssueDetailsDTO;
 import pl.wsb.issuetracker.issue.dto.IssueDisplayDTO;
 import pl.wsb.issuetracker.issue.dto.PatchIssueRequestDTO;
@@ -21,6 +20,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static pl.wsb.issuetracker.helper.TestDataHelper.*;
 
 
 @ExtendWith(SpringExtension.class)
@@ -36,17 +36,12 @@ public class IssueApiIntegrationTest {
             dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit 
             anim id est laborum.""";
-    public static final String LOW_SEVERITY = "LOW";
-    public static final String ASSIGNED_STATUS = "ASSIGNED";
-    public static final String REPORTER = "REPORTER";
-    public static final String TECHNICIAN = "TECHNICIAN";
+
     public static final ReportIssueRequestDTO REPORT_REQ_DTO = ReportIssueRequestDTO.builder()
             .summary(SUMMARY)
             .description(DESCRIPTION)
             .severity(LOW_SEVERITY)
             .build();
-    public static final String IN_PROGRESS_STATUS = "IN_PROGRESS";
-    public static final String MEDIUM_SEVERITY = "MEDIUM";
     public static final PatchIssueRequestDTO PATCH_REQ_DTO = PatchIssueRequestDTO.builder()
             .status(IN_PROGRESS_STATUS)
             .severity(MEDIUM_SEVERITY)
@@ -119,11 +114,6 @@ public class IssueApiIntegrationTest {
         assertThat(actual3.getStatus()).isEqualTo(IN_PROGRESS_STATUS);
         assertThat(actual3.getSeverity()).isEqualTo(MEDIUM_SEVERITY);
         assertThat(actual3.getUpdatedAt()).isNotNull();
-    }
-
-    private static String getUserDisplayName(String role) {
-        TestAuthenticationData reporter = SecurityContextHelper.AUTHENTICATION_DATA_MAP.get(role);
-        return reporter.getFirstName() + " " + reporter.getLastName();
     }
 
 }
