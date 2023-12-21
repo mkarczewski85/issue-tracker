@@ -16,6 +16,7 @@ import pl.wsb.issuetracker.helper.SecurityContextHelper;
 import pl.wsb.issuetracker.user.UserClient;
 import pl.wsb.issuetracker.user.dto.CreateUserRequestDTO;
 import pl.wsb.issuetracker.user.dto.PatchUserRequestDTO;
+import pl.wsb.issuetracker.user.dto.UserFiltersDTO;
 
 import java.util.UUID;
 
@@ -43,6 +44,9 @@ public class AdministrationApiIntegrationTest {
 
     public static final PatchUserRequestDTO DEACTIVATE_PATCH_USER_REQ_DTO = PatchUserRequestDTO.builder()
             .isActive(false)
+            .build();
+    public static final UserFiltersDTO ONLY_ACTIVE_FILTER = UserFiltersDTO.builder()
+            .isActive(true)
             .build();
 
     @Autowired
@@ -90,6 +94,7 @@ public class AdministrationApiIntegrationTest {
     @Test
     public void shouldPatchUserAccountData() {
 
+        // given
         UserAccountDTO userAccount = tested.createUserAccount(CREATE_USER_REQ_DTO);
 
         // when
@@ -105,7 +110,16 @@ public class AdministrationApiIntegrationTest {
 
     @Test
     public void shouldDeactivateUserAccount() {
+        // given
+        UserAccountDTO userAccount = tested.createUserAccount(CREATE_USER_REQ_DTO);
 
+        // when
+        tested.patchUserAccount(userAccount.getUuid(), DEACTIVATE_PATCH_USER_REQ_DTO);
+
+        PageWrapperDTO<UserAccountDisplayDTO> actual = tested.getPagedUserAccounts(0, 20, ONLY_ACTIVE_FILTER);
+
+        // then
+        assertThat(actual.getTotalCount()).isEqualTo(3);
     }
 
 }
