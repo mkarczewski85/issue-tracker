@@ -6,7 +6,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import pl.wsb.issuetracker.jpa.entity.Issue;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,6 +14,6 @@ public interface IssueRepository extends CrudRepository<Issue, Long>, PagingAndS
 
     Optional<Issue> findByUuid(UUID uuid);
 
-    Collection<Issue> findAllByReportedBy_Uuid(UUID uuid);
+    void deleteByUuid(UUID uuid);
 
 }

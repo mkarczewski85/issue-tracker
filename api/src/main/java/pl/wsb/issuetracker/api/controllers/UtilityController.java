@@ -22,7 +22,7 @@ import java.util.Collection;
 @RequestMapping(UtilityController.REST_API_BASE_PATH)
 @RequiredArgsConstructor
 public class UtilityController {
-    static final String REST_API_BASE_PATH = "${rest.prefix}";
+    static final String REST_API_BASE_PATH = "${rest.prefix}${rest.secured.path}";
     public static final UserFiltersDTO TECHNICIAN_USER_FILTER = UserFiltersDTO.builder()
             .userRole(UserRole.TECHNICIAN.name())
             .isActive(true)

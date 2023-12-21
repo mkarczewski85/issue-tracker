@@ -23,7 +23,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Validated
 public class AdministrationController {
-    static final String REST_API_BASE_PATH = "${rest.prefix}" + "/users";
+    static final String REST_API_BASE_PATH = "${rest.prefix}${rest.secured.path}" + "/users";
 
     private final AdministrationClient administrationClient;
 

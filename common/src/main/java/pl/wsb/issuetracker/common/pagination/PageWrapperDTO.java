@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+import java.util.Collection;
 
 @Data
 @Builder
@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PageWrapperDTO<T> {
 
-    private List<T> data;
+    private Collection<T> data;
     private long totalCount;
     private int totalPages;
     private int pageNumber;

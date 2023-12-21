@@ -20,7 +20,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CommentsController {
 
-    static final String REST_API_BASE_PATH = "${rest.prefix}/issues";
+    static final String REST_API_BASE_PATH = "${rest.prefix}${rest.secured.path}/issues";
 
     private final IssueClient issueClient;
 

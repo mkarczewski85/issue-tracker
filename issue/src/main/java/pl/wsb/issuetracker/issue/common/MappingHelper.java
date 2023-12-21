@@ -20,6 +20,7 @@ public final class MappingHelper {
                 .severity(issue.getSeverity().name())
                 .status(issue.getStatus().name())
                 .createdAt(issue.getCreatedAt())
+                .updatedAt(issue.getUpdatedAt())
                 .assignedTo(toUserDisplayName(issue.getAssignedTo()))
                 .createdBy(toUserDisplayName(issue.getReportedBy()))
                 .build();

@@ -45,7 +45,7 @@ public class Issue {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", nullable = true)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)

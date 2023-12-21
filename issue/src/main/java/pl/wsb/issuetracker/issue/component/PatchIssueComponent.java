@@ -10,7 +10,7 @@ import pl.wsb.issuetracker.jpa.entity.User;
 import pl.wsb.issuetracker.jpa.repository.IssueRepository;
 import pl.wsb.issuetracker.user.UserClient;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Component
@@ -22,9 +22,9 @@ public class PatchIssueComponent {
 
     public Issue patchIssue(final UUID uuid,
                             final PatchIssueRequestDTO reqDTO) {
-        final Optional<Issue> issueOptional = issueRepository.findByUuid(uuid);
-        issueOptional.ifPresent(issue -> patchIssue(issue, reqDTO));
-        return issueOptional.orElseThrow();
+        final Issue issue = issueRepository.findByUuid(uuid).orElseThrow();
+        patchIssue(issue, reqDTO);
+        return issueRepository.save(issue);
     }
 
     private void patchIssue(final Issue issue,
@@ -38,7 +38,7 @@ public class PatchIssueComponent {
         if (reqDTO.getAssignTo() != null) {
             updateAssignedTechnician(issue, reqDTO.getAssignTo());
         }
-        issueRepository.save(issue);
+        issue.setUpdatedAt(LocalDateTime.now());
     }
 
     private static void updateSeverity(final Issue issue, final PatchIssueRequestDTO reqDTO) {
