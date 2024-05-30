@@ -1,0 +1,30 @@
+plugins {
+    id 'pl.wsb.issuetracker.common-conventions'
+    alias libs.plugins.spring.boot
+    alias libs.plugins.spring.dependency.management
+}
+
+dependencies {
+
+    implementation project(':api')
+    implementation project(':authentication')
+
+    implementation libs.spring.boot.security
+    implementation libs.spring.boot.web
+    implementation libs.spring.rest.docs
+
+    implementation libs.liquibase.core
+    implementation libs.postgresql
+
+    runtimeOnly libs.h2.db
+
+    testImplementation libs.spring.boot.test
+//    testImplementation libs.bundles.junit
+    testImplementation libs.junit.api
+    testImplementation libs.junit.engine
+
+}
+
+bootRun {
+    environment('spring.profiles.active', 'test')
+}

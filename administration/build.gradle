@@ -1,0 +1,14 @@
+plugins {
+    id 'java-library'
+    id 'pl.wsb.issuetracker.common-conventions'
+}
+
+dependencies {
+
+    api project(':user')
+
+    implementation libs.spring.boot.starter
+    implementation libs.spring.boot.mail
+
+    testImplementation libs.spring.boot.test
+}

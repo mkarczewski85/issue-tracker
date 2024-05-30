@@ -1,0 +1,41 @@
+spring:
+  ### Data source config (test)
+  datasource:
+    url: 'jdbc:h2:mem:issue-tracker'
+    driverClassName: org.h2.Driver
+    username: sa
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+  ### Email sender config (test)
+  mail:
+    host: smtp.gmail.com
+    username: wsb.issue.tracker@gmail.com
+    password: <password>
+    port: 587
+    protocol: smtp
+
+### JWT config
+jwt:
+  base64-secret: >-
+    WCMjWk5YVitaIXJjUCwmLGQ/dkNJJTd3eEZKaTliVHQ4XixyJEJ+fk5hLGJ4dmVsfkFLc1MxWF5xZT9SZ2Z0ZGNmY2dmNDc0NjV2dGRmZmRnZmQ1NzY1N2ZoZmhnNjg3Ng
+  expiration-in-seconds: '86400'
+
+### Logging config
+
+logging:
+  level:
+    org:
+      springframework:
+        web: INFO
+      hibernate: ERROR
+    net:
+      guides: DEBUG

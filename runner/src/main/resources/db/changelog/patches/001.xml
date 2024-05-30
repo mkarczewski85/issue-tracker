@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="mkarczewski" id="001_user_profiles">
+        <createTable tableName="user_profiles">
+            <column autoIncrement="true" name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_user_profile"/>
+            </column>
+            <column name="uuid" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(64)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="role" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_active" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="department_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="mkarczewski" id="001_user_credentials">
+        <createTable tableName="user_credentials">
+            <column autoIncrement="true" name="id" type="bigint">
+                <constraints nullable="false" unique="true" primaryKey="true" primaryKeyName="pk_user_credentials"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_hash" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salt" type="varchar(160)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mkarczewski" id="001_departments">
+        <createTable tableName="departments">
+            <column autoIncrement="true" name="id" type="bigint">
+                <constraints nullable="false" unique="true" primaryKey="true" primaryKeyName="pk_departments"/>
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mkarczewski" id="001_user_credentials_fk">
+        <addForeignKeyConstraint
+                baseColumnNames="user_id"
+                baseTableName="user_credentials"
+                constraintName="fk_credentials_user_id"
+                onDelete="CASCADE"
+                referencedColumnNames="id"
+                referencedTableName="user_profiles"
+                validate="true"/>
+    </changeSet>
+
+    <changeSet author="mkarczewski" id="001_users_fk">
+        <addForeignKeyConstraint
+                baseColumnNames="department_id"
+                baseTableName="user_profiles"
+                constraintName="fk_user_department_id"
+                onDelete="CASCADE"
+                referencedColumnNames="id"
+                referencedTableName="departments"
+                validate="true"/>
+    </changeSet>
+</databaseChangeLog>

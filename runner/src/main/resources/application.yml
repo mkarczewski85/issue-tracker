@@ -1,0 +1,25 @@
+  ### Info endpoint configuration
+info:
+  app:
+    version: 1.0
+    name: WSB Issue Tracker
+    java:
+      version: 17 OpenJDK
+    description: Program typu issue tracker
+  
+  ### API prefixes
+rest:
+  prefix: /api
+  public:
+    path: /public
+  secured:
+    path: /secured
+
+spring:
+  ### JPA open-in-view
+  jpa:
+    open-in-view: false
+  ### LiquiBase properties
+  liquibase:
+    contexts: main
+    change-log: classpath:db/changelog/liquibase-changelog.xml

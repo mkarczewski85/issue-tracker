@@ -1,0 +1,34 @@
+### Data source config (test)
+spring:
+  datasource:
+    url: jdbc:postgresql://<db_server_url>
+    driverClassName: org.postgresql.Driver
+    username: <db_username>
+    password: <db_password>
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  ### Email sender config (test)
+  mail:
+    host: <email_server>
+    username: <email_account_username>
+    password: <email_account_password>
+    port: 587
+    protocol: smtp
+
+### SSL config
+server:
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:keystore/wsb.p12
+    key-store-password: Wiosna2024
+    key-alias: wsb
+    enabled: true
+  port: 8443
+
+### JWT config
+jwt:
+  base64-secret: <jwt_signing_key>
+  expiration-in-seconds: '86400'
