@@ -1,0 +1,610 @@
+openapi: 3.0.1
+info:
+  title: Issue Tracker
+  description: Simple ticketing application
+  contact:
+    name: Maciej Karczewski
+    email: m.karczewski1985@gmail.com
+  license:
+    name: MIT
+  version: V1.0
+servers:
+- url: http://localhost:8080
+  description: Localhost Server URL
+paths:
+  /api/secured/users:
+    get:
+      tags:
+      - administration-controller
+      operationId: getPagedUserAccounts
+      parameters:
+      - name: arg0
+        in: query
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+          default: 0
+      - name: arg1
+        in: query
+        required: false
+        schema:
+          minimum: 20
+          type: integer
+          format: int32
+          default: 20
+      - name: arg2
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserFiltersDTO'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageWrapperDTOUserAccountDisplayDTO'
+    post:
+      tags:
+      - administration-controller
+      operationId: createUserAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserAccountDTO'
+  /api/secured/users/{uuid}/reset-password:
+    post:
+      tags:
+      - administration-controller
+      operationId: resetUserAccountCredentials
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserAccountDTO'
+  /api/secured/issues:
+    get:
+      tags:
+      - issues-controller
+      operationId: getPagedUserIssues
+      parameters:
+      - name: arg0
+        in: query
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+          default: 0
+      - name: arg1
+        in: query
+        required: false
+        schema:
+          minimum: 20
+          type: integer
+          format: int32
+          default: 20
+      - name: arg2
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/IssueFiltersDTO'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageWrapperDTOIssueDisplayDTO'
+    post:
+      tags:
+      - issues-controller
+      operationId: reportIssue
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportIssueRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/IssueDetailsDTO'
+  /api/secured/issues/{uuid}/comments:
+    get:
+      tags:
+      - comments-controller
+      operationId: getIssueComments
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IssueCommentDTO'
+    post:
+      tags:
+      - comments-controller
+      operationId: publishIssueComment
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishIssueCommentRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/IssueCommentDTO'
+  /api/public/authenticate:
+    post:
+      tags:
+      - authentication-controller
+      operationId: authenticate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLoginPasswordDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/JWTokenDTO'
+  /api/secured/users/{uuid}:
+    get:
+      tags:
+      - administration-controller
+      operationId: getUserAccount
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserAccountDTO'
+    patch:
+      tags:
+      - administration-controller
+      operationId: patchUserAccount
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchUserRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserAccountDTO'
+  /api/secured/issues/{uuid}:
+    get:
+      tags:
+      - issues-controller
+      operationId: getIssueDetails
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/IssueDetailsDTO'
+    patch:
+      tags:
+      - issues-controller
+      operationId: patchIssue
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchIssueRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/IssueDetailsDTO'
+  /api/secured/technicians:
+    get:
+      tags:
+      - utility-controller
+      operationId: getAvailableTechnicians
+      parameters:
+      - name: arg0
+        in: query
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+          default: 0
+      - name: arg1
+        in: query
+        required: false
+        schema:
+          minimum: 20
+          type: integer
+          format: int32
+          default: 20
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageWrapperDTOUserAccountDisplayDTO'
+  /api/secured/me:
+    get:
+      tags:
+      - authentication-controller
+      operationId: getLoggedUser
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/LoggedUserDTO'
+  /api/secured/departments:
+    get:
+      tags:
+      - utility-controller
+      operationId: getAllDepartments
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DepartmentDTO'
+components:
+  schemas:
+    CreateUserRequestDTO:
+      required:
+      - email
+      - firstName
+      - lastName
+      - role
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        departmentId:
+          type: integer
+          format: int64
+        email:
+          type: string
+        role:
+          type: string
+    UserAccountDTO:
+      type: object
+      properties:
+        uuid:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        departmentName:
+          type: string
+        departmentLocation:
+          type: string
+    ReportIssueRequestDTO:
+      required:
+      - description
+      - severity
+      - summary
+      type: object
+      properties:
+        summary:
+          maxLength: 150
+          minLength: 0
+          type: string
+        description:
+          maxLength: 2500
+          minLength: 0
+          type: string
+        severity:
+          type: string
+    IssueDetailsDTO:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        summary:
+          type: string
+        description:
+          type: string
+        severity:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+        assignedTo:
+          type: string
+    PublishIssueCommentRequestDTO:
+      required:
+      - comment
+      type: object
+      properties:
+        comment:
+          maxLength: 2000
+          minLength: 0
+          type: string
+    IssueCommentDTO:
+      type: object
+      properties:
+        comment:
+          type: string
+        publishedBy:
+          type: string
+        publishedAt:
+          type: string
+          format: date-time
+    UserLoginPasswordDTO:
+      required:
+      - login
+      - password
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+    JWTokenDTO:
+      type: object
+      properties:
+        token:
+          type: string
+        expiresIn:
+          type: integer
+          format: int64
+        userInfo:
+          $ref: '#/components/schemas/LoggedUserDTO'
+    LoggedUserDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+        department:
+          type: string
+        location:
+          type: string
+    PatchUserRequestDTO:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        departmentId:
+          type: integer
+          format: int64
+        isActive:
+          type: boolean
+    PatchIssueRequestDTO:
+      type: object
+      properties:
+        status:
+          type: string
+        severity:
+          type: string
+        assignTo:
+          type: string
+          format: uuid
+    UserFiltersDTO:
+      type: object
+      properties:
+        uuid:
+          type: string
+        namePhrase:
+          type: string
+        emailPhrase:
+          type: string
+        userRole:
+          type: string
+        isActive:
+          type: boolean
+    NextPageDTO:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int64
+        offset:
+          type: integer
+          format: int64
+    PageWrapperDTOUserAccountDisplayDTO:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAccountDisplayDTO'
+        totalCount:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        pageNumber:
+          type: integer
+          format: int32
+        offset:
+          type: integer
+          format: int64
+        limit:
+          type: integer
+          format: int64
+        hasNextPage:
+          type: boolean
+        next:
+          $ref: '#/components/schemas/NextPageDTO'
+    UserAccountDisplayDTO:
+      type: object
+      properties:
+        uuid:
+          type: string
+        displayName:
+          type: string
+        role:
+          type: string
+        departmentName:
+          type: string
+    IssueFiltersDTO:
+      type: object
+      properties:
+        uuid:
+          type: string
+        status:
+          type: string
+        severity:
+          type: string
+    IssueDisplayDTO:
+      type: object
+      properties:
+        uuid:
+          type: string
+        summary:
+          type: string
+        severity:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    PageWrapperDTOIssueDisplayDTO:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/IssueDisplayDTO'
+        totalCount:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        pageNumber:
+          type: integer
+          format: int32
+        offset:
+          type: integer
+          format: int64
+        limit:
+          type: integer
+          format: int64
+        hasNextPage:
+          type: boolean
+        next:
+          $ref: '#/components/schemas/NextPageDTO'
+    DepartmentDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        location:
+          type: string
